@@ -1,0 +1,8 @@
+pip install virtualenv
+virtualenv virtualenv_name
+source virtualenv_name/bin/activate
+pip install flask
+export FLASK_APP="server.py"
+flask run
+
+before running server, change line 59 of server.py to your local storage path
