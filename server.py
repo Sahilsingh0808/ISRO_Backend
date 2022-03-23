@@ -11,6 +11,8 @@ import logging
 from ml import *
 import json
 from json import JSONEncoder
+from pathlib import Path
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -36,7 +38,8 @@ d=[]
 
 @app.route("/",methods=["GET"])
 def hello_world():
-    return "ISRO Backend Server"
+    
+    return "JuX Server"
 
 @app.route("/members",methods=["POST"])
 def membersPost():
@@ -59,7 +62,12 @@ def membersPost():
 #     return response
 
 def output(name):
-    path_to_lc="/home/sahilsingh/Documents/Repositories/ISRO_PS/isro/Backend/instance/uploads/"+name
+    downloads_path = str(Path.home() / "Downloads")
+    if not os.path.exists(downloads_path+"/uploads"):
+        os.makedirs(downloads_path+"/uploads")
+    path_to_lc=uploads_dir+"/"+name
+    print(path_to_lc)
+    # path_to_lc="/home/sahilsingh/Documents/Repositories/MP_ISRO_T10/ISRO__Backend/instance/uploads/"+name
     # rand_lc = lightcurve(path_to_lc, should_plot=False)
     # print(rand_lc)
     # b=np.array(rand_lc)
