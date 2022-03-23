@@ -6,3 +6,4 @@ plotly==5.6.0
 scipy==1.7.3
 flask
 gunicorn
+flask_cors
