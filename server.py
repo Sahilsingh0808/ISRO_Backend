@@ -65,8 +65,8 @@ def output(name):
     downloads_path = str(Path.home() / "Downloads")
     if not os.path.exists(downloads_path+"/uploads"):
         os.makedirs(downloads_path+"/uploads")
-    # path_to_lc=uploads_dir+"/"+name
-    # print(path_to_lc)
+    path_to_lc=uploads_dir+"/"+name
+    print(path_to_lc)
     # path_to_lc="/home/sahilsingh/Documents/Repositories/MP_ISRO_T10/ISRO__Backend/instance/uploads/"+name
     # rand_lc = lightcurve(path_to_lc, should_plot=False)
     # print(rand_lc)
@@ -92,7 +92,7 @@ def output(name):
     # #finalzip.tojson
     # print(final_zip)
     # return [final_zip,np.array(rand_lc),xnew,ynew]
-    x_arr, y_arr = lightcurve(name)
+    x_arr, y_arr = lightcurve(path_to_lc)
     x_new = []
     y_new = []
     for i in range(len(x_arr)):
@@ -141,7 +141,7 @@ def upload_file():
     print(file)
     print(type(file))
     file.save(os.path.join(uploads_dir, secure_filename(file.filename)))
-    output_arr=output(file)
+    output_arr=output(file.filename)
     final_zip=output_arr[0]
     csvdf = final_zip.to_csv()
     # csvdf.columns.values[0]="Start Time"
