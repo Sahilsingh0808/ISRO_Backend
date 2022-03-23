@@ -25,6 +25,9 @@ app = Flask(__name__)
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+uploads_dir = os.path.join(app.instance_path, 'uploads')
+os.makedirs(uploads_dir, exist_ok=True)
+
 # members=["John", "Mary", "Peter"]
 
 # #Members API Route
@@ -73,31 +76,6 @@ def output(name):
     print(downloads_path)
     print("PATH")
     print(path)
-    # path_to_lc="/home/sahilsingh/Documents/Repositories/MP_ISRO_T10/ISRO__Backend/instance/uploads/"+name
-    # rand_lc = lightcurve(path_to_lc, should_plot=False)
-    # print(rand_lc)
-    # b=np.array(rand_lc)
-    # rand_lc = lightcurve(path_to_lc, should_plot=False)
-    # #np.array(rand_lc) jsonify this
-    # xnew, ynew = smoothening(rand_lc, 40)    
-    # c=xnew
-    # d=ynew
-    # print(xnew,ynew)
-
-    # _s0, _p0 = get_lvl_0_extremas(xnew, ynew, should_plot=False)
-    # _s1, _p1 = get_lvl_1_extremas(xnew, ynew, _s0, _p0, should_plot=False)
-    # _s2, _p2 = get_lvl_2_extremas(xnew, ynew, _s1, _p1, should_plot=False)
-    # _s3, _p3 = get_lvl_3_extremas(xnew, ynew, _s2, _p2, should_plot=False)
-    # _s4, _p4 = get_lvl_4_extremas(xnew, ynew, _s3, _p3, should_plot=False)
-    
-    # _e0 = get_lvl_0_ends(xnew, ynew, _s4, _p4, _s2)
-    # _e1 = get_lvl_1_ends(xnew, ynew, _s0, _p4, _e0)
-
-    # _zip = get_interm_zip(ynew, _s4, _p4, _e1)
-    # final_zip = get_final_zip(xnew, ynew, _zip)
-    # #finalzip.tojson
-    # print(final_zip)
-    # return [final_zip,np.array(rand_lc),xnew,ynew]
     x_arr, y_arr = lightcurve(path_to_lc)
     x_new = []
     y_new = []
@@ -132,8 +110,7 @@ def output(name):
                 print(final_zip)
     return [final_zip,"1",xnew,ynew,x_new,y_new]
 
-uploads_dir = os.path.join(app.instance_path, 'uploads')
-os.makedirs(uploads_dir, exist_ok=True)
+
 
 def listString(a):
     stri=""
