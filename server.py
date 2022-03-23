@@ -68,6 +68,7 @@ def output(name):
     path_to_lc=uploads_dir+"/"+name
     print("PATH")
     print(path_to_lc)
+    print(downloads_path)
     # path_to_lc="/home/sahilsingh/Documents/Repositories/MP_ISRO_T10/ISRO__Backend/instance/uploads/"+name
     # rand_lc = lightcurve(path_to_lc, should_plot=False)
     # print(rand_lc)
