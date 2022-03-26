@@ -9,6 +9,7 @@ import os
 from scipy.optimize import curve_fit
 from numpy import exp, log
 import time
+import cdflib
 
 MIN_MA_WINDOW_SZ = 20
 MIN_MULTIPLIER = 4
@@ -21,17 +22,35 @@ def return_folder_paths(file_name):
 
 """Returning a Light Curve from a file"""
 def lightcurve(file):
-    if (file.endswith(".lc")):
-        t = Table.read(file)
-    elif (file.endswith(".xls") or file.endswith(".xlss")):
-        xls = pd.ExcelFile(file)
-        t = xls.parse(0)
-    elif (file.endswith(".csv") or file.endswith(".txt")):
-        t = pd.read_csv(file)
-    tmp_rate = t["RATE"]
     tmp_time = []
-    for i in range(len(tmp_rate)):
-        tmp_time.append(int(t["TIME"][i] - t["TIME"][0]))
+    tmp_rate = []
+
+    if (file.endswith(".lc") or file.endswith(".fits")):
+        t = Table.read(file)
+        for i in range(len(t)):
+            tmp_time.append(int(t[i][0] - t[0][0]))
+            tmp_rate.append(t[i][1])
+    elif (file.endswith(".xls") or file.endswith(".xlsx")):
+        t = pd.read_excel(file, header=None)
+        tmp_rate = t[1]
+        for i in range(len(tmp_rate)):
+            tmp_time.append(int(t[0][i] - t[0][0]))
+    elif (file.endswith(".csv")):
+        t = pd.read_csv(file, header=None)
+        tmp_rate = t[1]
+        for i in range(len(tmp_rate)):
+            tmp_time.append(int(t[0][i] - t[0][0]))
+    elif (file.endswith(".txt")):
+        t = pd.read_csv(file, header=None, delimiter=" ", skipinitialspace=True)
+        tmp_rate = t[1]
+        for i in range(len(tmp_rate)):
+            tmp_time.append(int(t[0][i] - t[0][0]))
+    elif (file.endswith(".cdf")):
+        t = cdflib.CDF(file)
+        for i in range(len(t[0][0])):
+            tmp_time.append(int(t[0][0][i][0] - t[0][0][0][0]))
+            tmp_rate.append(int(t[0][0][i][1]))
+    
     prev = 0
     x_arr = []
     y_arr = []
